@@ -9,8 +9,10 @@ SCORE_COORDS = [-20, 260]
 class ScoreBoard(Turtle):
 
     def __init__(self):
+        """ScoreBoard class constructor."""
         super().__init__()
         self.score = 0
+        self.high_score = 0
         self.pencolor(SCORE_COLOR)
         self.penup()
         self.hideturtle()
@@ -18,13 +20,18 @@ class ScoreBoard(Turtle):
         self.update_score_board()
 
     def update_score_board(self):
-        self.write(arg = f"Score: {self.score}", move = False, align = SCORE_ALIGN, font = SCORE_FONT)
+        """Updates the scoreboard."""
+        self.clear()
+        self.write(f"Score: {self.score} High Score: {self.high_score}", align = SCORE_ALIGN, font = SCORE_FONT)
 
     def increase_score(self):
-        self.clear()
+        """Increases the score by 1."""
         self.score += 1
         self.update_score_board()
 
-    def game_over(self):
-        self.goto(x = 0, y = 0)
-        self.write(arg = "GAME OVER", align = SCORE_ALIGN, font = SCORE_FONT)
+    def reset_score(self):
+        """Set high-score if it's higher than current score and reset score."""
+        if self.score > self.high_score:
+            self.high_score = self.score
+        self.score = 0
+        self.update_score_board()

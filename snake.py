@@ -22,6 +22,7 @@ class Snake:
             self.add_block(pos)
 
     def add_block(self, position):
+        """Adds a new block to the tail of the snake."""
         snake_block = Turtle(shape = "square")
         snake_block.turtlesize(0.5, 0.5)
         snake_block.color("white")
@@ -31,6 +32,7 @@ class Snake:
         self.snake_list.append(snake_block)
 
     def extend(self):
+        """Extends the size of the snake once it consumed food."""
         self.add_block(self.tail.position())
 
     def move_snake(self):
@@ -40,6 +42,16 @@ class Snake:
             new_y = self.snake_list[block - 1].ycor()
             self.snake_list[block].goto(new_x, new_y)
         self.head.forward(MOVE_DISTANCE)
+        self.last_direction = self.head.heading()
+
+    def reset_snake(self):
+        """Deletes the previous snake, and create a new one in the center of the screen."""
+        for block in self.snake_list:
+            block.goto(1000, 1000)
+        self.snake_list.clear()
+        self.create_snake()
+        self.head = self.snake_list[0]
+        self.tail = self.snake_list[-1]
         self.last_direction = self.head.heading()
 
     def up(self):
